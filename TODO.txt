@@ -1,0 +1,9 @@
+Protected Routes  -- completed
+Delete ride details after ride is completed
+captain availability toogle
+Micro Services
+Profile hamburger
+Migrate to react Native
+Audio call featurer - need react native package
+
+Payment Integration

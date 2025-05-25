@@ -1,0 +1,197 @@
+.img-width{
+  width: 60px;
+  margin-left:32px;
+}
+.home-div{
+  height: 96vh; /* h-screen */
+  padding-top: 2rem; /* pt-8 */
+  width: 100%; /* w-full */
+  display: flex; /* flex */
+  justify-content: space-between; /* justify-between */
+  flex-direction: column; /* flex-col */
+  background-image: url('https://png.pngtree.com/png-vector/20230912/ourmid/pngtree-online-ordering-taxi-car-rent-and-sharing-using-service-mobile-application-png-image_10027604.png'); /* bg-[url(...)] */
+  background-position: center; /* bg-bottom */
+  background-size: cover;
+}
+.get-started{
+  background-color: aliceblue;
+  padding: 1rem 1rem 1.75rem 1rem;
+  text-align: center;
+}
+.get-started h2{
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: bold; 
+}
+.button{
+  background-color: #111; /* bg-[#111] */
+  color: white; /* text-white */
+  font-weight: 600; /* font-semibold */
+  margin-bottom: 0.75rem; /* mb-3 */
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  width: 100%; /* w-full */
+  font-size: 1.125rem; /* text-lg */
+}
+
+.button::placeholder {
+  font-size: 1rem; /* 16px (default base size) */
+}
+.login-container{
+  padding: 1.5rem; /* p-7 */
+  height: 95vh;
+  display: flex; /* flex */
+  flex-direction: column; /* flex-col */
+  justify-content: space-between; /* justify-between */
+}
+
+.login-input, .login-buttom, .signup-input{
+  background-color: #eeeeee; /* bg-[#eeeeee] */
+  margin-bottom: 1.75rem; /* mb-7 */
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  border: 1px solid #ccc; /* border */
+  width: 97%; /* w-full */
+  font-size: 1.125rem; /* text-lg */
+}
+.login-button-captain, .login-button-user{
+  background-color: #10b461; /* bg-[#10b461] */
+  display: flex; /* flex */
+  align-items: center; /* items-center */
+  justify-content: center; /* justify-center */
+  color: white; /* text-white */
+  font-weight: 600; /* font-semibold */
+  margin-bottom: 1.25rem; /* mb-5 */
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  text-decoration: none;
+  font-size: 1.125rem; /* text-lg */
+}
+.login-buttom, .login-button-captain{
+  background-color: #111;
+  color: aliceblue;
+  font-weight:bold;
+  border: none;
+  margin-left: 16px;
+  margin-bottom: 10px;
+}
+
+.login-button-captain{
+  background-color: #10b461;
+  margin-top: 8px;
+}
+.login-button-user{
+  background-color: #d5622d;
+  margin-top: 8px;
+}
+.login-logo{
+  width: 4rem; /* w-16 */
+  margin-bottom: 2.5rem; /* mb-10 */
+}
+
+.login-input::placeholder {
+  font-size: 1rem; /* placeholder:text-base */
+}
+
+.login-password{
+  font-size: 1.25rem; /* text-xl */
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+.heading{
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 500; /* font-medium */
+  margin-bottom: 0.5rem; /* mb-2 */
+  width: 50%;
+}
+.account{
+  color: rgb(40, 40, 252);
+}
+.signup-name{
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.signup-input{
+  padding: 0.5rem 0.3rem;
+}
+.footer-base{
+  font-size: 10px;      /* Same as text-[10px] */
+  line-height: 1.25;
+}
+.footer-base span{
+  text-decoration: underline;
+}
+.vehicle-container{
+  display: flex;
+  gap: 1rem; /* Equivalent to gap-4 in Tailwind (4 * 0.25rem = 1rem) */
+  margin-bottom: 1rem; 
+}
+.riding{
+  height: 100vh;
+}
+.riding-panel1,.riding-panel2 {
+  height: 50%;
+}
+.riding-panel2{
+  padding: 16px;
+}
+.riding-panel1 img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.home-icon{
+  position: fixed;
+  height: 40px;
+  width: 40px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+}
+.home-icon i{
+  font-size: 18px;
+}
+.captain-homescreen{
+  height: 100vh;
+  overflow: hidden;
+}
+.first-view{
+  position: fixed;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 93vw;
+}
+.first-view img{
+  width: 64px;
+}
+.captain-home-link{
+  height: 40px;
+  width: 40px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+}
+.captain-home-link i{
+  font-size: 18px;
+  font-weight: 600;
+}
+.captain-map{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.rider-popup{
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  bottom: 0;
+  background-color: white;
+  padding: 40px 12px;
+  padding-top: 48px;
+  transform: translateY(100%);
+}
