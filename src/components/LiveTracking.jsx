@@ -2,6 +2,7 @@ import React,{useState,useEffect, useContext, useRef} from 'react'
 import { LoadScript,Marker,GoogleMap,DirectionsRenderer } from '@react-google-maps/api'
 import { JourneyContext } from '../context/JourneyContext';
 import HamburgerMenu from './HamburgerMenu';
+import '../App.css'
 const containerStyle = {
   width: '100%',
   height: '100%',
@@ -11,14 +12,15 @@ const center = {
   lat: -3.745,
   lng: -38.523
 };
-export const LiveTracking = ({showRoute=false,setPickup}) => {
+export const LiveTracking = ({showRoute=false,setPickup=()=>{},panelOpen=false}) => {
   const [ currentPosition, setCurrentPosition ] = useState(center);
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const {coordinates, updateCoordinates}=useContext(JourneyContext)
+  const [zoom,setZoom]=useState(11)
   const mapRef=useRef(null)
   const [mapLoaded,setMapLoaded]=useState(false)
 //   console.log("Show my route ",showRoute)
-//   console.log("Coordinates ",coordinates)
+  console.log("Coordinates ",coordinates)
   const { pickupCoordinates = null, destinationCoordinates = null } = coordinates || {};
 
 
@@ -109,67 +111,87 @@ export const LiveTracking = ({showRoute=false,setPickup}) => {
                   lat: latitude,
                   lng: longitude
               });
+              
           });
       };
 
       updatePosition(); // Initial position update
 
       const intervalId = setInterval(updatePosition, 10000); // Update every 10 seconds
-
+      return()=>clearInterval(intervalId)
   }, []);
   return (
     <>
-    <div style={{position: 'relative'}}>
-          <HamburgerMenu/>
-      </div>
-      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
-          <GoogleMap
-              mapContainerStyle={containerStyle}
-              center={currentPosition}
-              zoom={11}
-              onLoad={(map)=>{
-                mapRef.current=map
-                setMapLoaded(true)
-                calculateRoute()
-              }}
-          >
-              {/* Current location marker with a distinct icon */}
-              <Marker
-                  position={currentPosition}
-                  icon={{
-                      url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Custom icon for current location
-                  }}
-              />
+        {
+            !panelOpen && (
+                <>
+                    <div style={{position: 'relative'}}>
+                        <HamburgerMenu/>
+                    </div>
+                    <div className="zoom">
+                        <div className="buttons">
+                            <p onClick={()=>setZoom(prev=>prev+1)}>+</p>
+                            <div className="separator"></div>
+                            <p onClick={()=>setZoom(prev=>prev-1)}>-</p>
+                        </div>
+                    </div>
+                </>
+            )
+        }
+        <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
+            {/* Can we create a '+' '-' button for zoom-in and zoom-out */}
+            <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={currentPosition}
+                zoom={zoom}
+                onLoad={(map)=>{
+                    mapRef.current=map
+                    setMapLoaded(true)
+                    calculateRoute()
+                }}
+                options={{
+                    draggable: true,
+                    scrollwheel: true,
+                    disableDefaultUI: false,
+                    // zoomControl: true,
+                }}>
+                {/* Current location marker with a distinct icon */}
+                <Marker
+                    position={currentPosition}
+                    icon={{
+                        url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Custom icon for current location
+                    }}
+                />
 
-              {/* Pickup and Destination Markers */}
-              {pickupCoordinates && destinationCoordinates && (
-                  <>
-                      {/* Pickup Marker */}
-                      <Marker
-                          position={pickupCoordinates}
-                          icon={{
-                              url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png", // Green icon for pickup location
-                          }}
-                      />
+                {/* Pickup and Destination Markers */}
+                {pickupCoordinates && destinationCoordinates && (
+                    <>
+                        {/* Pickup Marker */}
+                        <Marker
+                            position={pickupCoordinates}
+                            icon={{
+                                url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png", // Green icon for pickup location
+                            }}
+                        />
 
-                      {/* Destination Marker */}
-                      <Marker
-                          position={destinationCoordinates}
-                          icon={{
-                              url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // Red icon for destination location
-                          }}
-                      />
+                        {/* Destination Marker */}
+                        <Marker
+                            position={destinationCoordinates}
+                            icon={{
+                                url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // Red icon for destination location
+                            }}
+                        />
 
-                      {/* Route */}
-                      {showRoute && directionsResponse && (
-                          <DirectionsRenderer directions={directionsResponse} options={{
-                            suppressMarkers: true, // Remove default A and B markers
-                          }} />
-                      )}
-                  </>
-              )}
-          </GoogleMap>
-      </LoadScript>
+                        {/* Route */}
+                        {showRoute && directionsResponse && (
+                            <DirectionsRenderer directions={directionsResponse} options={{
+                                suppressMarkers: true, // Remove default A and B markers
+                            }} />
+                        )}
+                    </>
+                )}
+            </GoogleMap>
+        </LoadScript>
     </>
   )
 }

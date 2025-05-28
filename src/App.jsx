@@ -15,6 +15,7 @@ import Riding from './pages/Riding'
 import CaptainRiding from './pages/CaptainRiding'
 import UserProfile from './pages/UserProfile'
 import { useEffect, useState } from 'react'
+import RideHistory from './pages/RideHistory'
 function App() {
   
   const [windowInnerWidth,setWindowInnerWidth]=useState(window.innerWidth<=768)
@@ -46,6 +47,7 @@ function App() {
         <Route path='/login' element={
             <UserLogin/>
         }/>
+        <Route path='/ride-history' element={<RideHistory/>}/>
         <Route path='/signup' element={
             <UserSignup/>
           }/>

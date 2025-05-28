@@ -4,7 +4,7 @@ import {useGSAP} from '@gsap/react'
 import './component.css'
 import { Link } from 'react-router-dom'
 
-const HamburgerMenu = () => {
+const HamburgerMenu = ({captain=false}) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   useGSAP(function(){
@@ -38,12 +38,13 @@ const HamburgerMenu = () => {
       <div className="menu" ref={menuRef}>
         <ul>
           <li>Profile</li>
-          <li>Ride History</li>
+          {
+            !captain && <li><Link to='/ride-history'>Ride History</Link></li>
+          }
           <li>Update Profile</li>
           <li>Settings</li>
-          <li>Logout</li>
+          <li><Link to='/logout'>Logout</Link></li>
         </ul>
-        <Link to='/captain-login'>Drive Mode On</Link>
       </div>
     </>
   )

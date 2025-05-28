@@ -368,7 +368,7 @@
     width: 30px;
     height: 25px;
     cursor: pointer;
-    z-index: 100;
+    z-index: 9999;
   }
   
   .hamburger-icon span {
@@ -402,7 +402,7 @@
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
     padding-right: 65px;
-    z-index: 50;
+    z-index: 9998;
     display: flex;
     flex-direction: column;
     padding-top: 80px;

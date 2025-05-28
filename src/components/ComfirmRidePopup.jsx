@@ -10,8 +10,8 @@ const ConfirmRidePopup = ({setConfirmRidePopupPanel,ride,setRidePopupPanel}) => 
     const [ otp, setOtp ] = useState('')
     // const [coordinates, setCoordinates] = useState(null)
     const navigate = useNavigate()
-    const {coordinates, updateCoordinates}=useContext(JourneyContext)
-    console.log(coordinates)
+    const {updateCoordinates}=useContext(JourneyContext)
+    // console.log(coordinates)
     const submit=async()=>{
         // this was a get operation in the video but it should be a post operation
         try {
@@ -27,14 +27,18 @@ const ConfirmRidePopup = ({setConfirmRidePopupPanel,ride,setRidePopupPanel}) => 
 
             // Call the api for the coordinate
 
-            const locationData=await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/location`,{
-                params:{
-                    rideId:ride._id,
-                    pickup:response.data.pickup,
-                    destination:response.data.destination
-                }
-            })
-            console.log(locationData.data)
+            let locationData={}
+            if(response)
+            {
+                locationData=await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/location`,{
+                    params:{
+                        rideId:ride._id,
+                        pickup:response.data.pickup,
+                        destination:response.data.destination
+                    }
+                })
+            }
+            console.log("locationData.data ",locationData.data)
             // setCoordinates(locationData.data)
             updateCoordinates(locationData.data)
             if(response.status===200)

@@ -34,17 +34,15 @@ const CaptainRiding = () => {
         <div className='image-box'>
             <img style={{width:'48px'}}
             src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"/>
-            
         </div>
 
         <div className='ride-panel'
-            onClick={() => {
-                setFinishRidePanel(true)
-            }}
-        >
-            <h5><i className="ri-arrow-up-wide-line" style={{fontSize:'32px',color:'darkslategray'}}></i></h5>
-            <h4 style={{fontSize:'24px',fontWeight:'600'}}>4 KM away</h4>
-            <button>Complete Ride</button>
+          onClick={() => {
+              setFinishRidePanel(true)
+          }}>
+          <h5><i className="ri-arrow-up-wide-line" style={{fontSize:'32px',color:'darkslategray'}}></i></h5>
+          <h4 style={{fontSize:'24px',fontWeight:'600'}}>4 KM away</h4>
+          <button>Complete Ride</button>
         </div>
         <div ref={finishRidePanelRef} className='finishRide'>
             <FinishRide setFinishRidePanel={setFinishRidePanel} rideData={rideData}/>

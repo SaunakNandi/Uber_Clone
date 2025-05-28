@@ -242,9 +242,8 @@ const Home = () => {
 // home-logo2 incomplete
   return (
     <div className='home-screen'>
-      
       <div className='livetracker'>
-        <LiveTracking showRoute={true} setPickup={setPickup}/>
+        <LiveTracking showRoute={true} setPickup={setPickup} panelOpen={panelOpen}/>
       </div>
       <div className="home-trip">
         <div className="trip-smallbox">
