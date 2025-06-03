@@ -50,9 +50,9 @@
   border-radius: 0.5rem; /* rounded-lg */
   padding: 0.5rem 1rem; /* px-4 py-2 */
   border: 1px solid #ccc; /* border */
-  width: 97%; /* w-full */
   font-size: 1.125rem; /* text-lg */
 }
+
 .login-button-captain, .login-button-user{
   background-color: #10b461; /* bg-[#10b461] */
   display: flex; /* flex */
@@ -74,7 +74,9 @@
   margin-left: 16px;
   margin-bottom: 10px;
 }
-
+.login-buttom{
+  margin-left:0 !important;
+}
 .login-button-captain{
   background-color: #10b461;
   margin-top: 8px;
@@ -101,6 +103,17 @@
   font-weight: 500; /* font-medium */
   margin-bottom: 0.5rem; /* mb-2 */
   width: 50%;
+}
+.login-form{
+      margin-top: 30px;
+    display: flex
+;
+    flex-direction: column;
+}
+.login-form h3{
+  text-align: left;
+  width: 100%;
+  margin-bottom: 5px;
 }
 .account{
   color: rgb(40, 40, 252);
@@ -222,4 +235,19 @@
 
 .zoom .buttons p{
   font-size: 30px;
+}
+
+.otp-container{
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.otp-button{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

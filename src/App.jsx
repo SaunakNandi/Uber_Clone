@@ -16,6 +16,8 @@ import CaptainRiding from './pages/CaptainRiding'
 import UserProfile from './pages/UserProfile'
 import { useEffect, useState } from 'react'
 import RideHistory from './pages/RideHistory'
+import OtpVerification from './pages/OtpVerification'
+import CaptainOTPVerification from './pages/CaptainOTPVerification'
 function App() {
   
   const [windowInnerWidth,setWindowInnerWidth]=useState(window.innerWidth<=768)
@@ -56,6 +58,16 @@ function App() {
             <Riding/>
           </UserProtectWrapper>
         }/>
+        <Route path='/otp' element={
+          <UserProtectWrapper>
+            <OtpVerification/>
+          </UserProtectWrapper>
+        }/>
+        <Route path='/logout' element={
+          <UserProtectWrapper>
+            <UserLogout/>
+          </UserProtectWrapper>
+        }/>
         <Route path='/captain-login' element={
             <CaptainLogin/>
           }/>
@@ -71,11 +83,11 @@ function App() {
           </CaptainProtectWrapper>
           }
           />
-        <Route path='/logout' element={
-          <UserProtectWrapper>
-            <UserLogout/>
-          </UserProtectWrapper>
-        }/>
+          <Route path='/captain-otp' element={
+            <CaptainProtectWrapper>
+              <CaptainOTPVerification/>
+            </CaptainProtectWrapper>
+          }/>
         <Route path='/profile' element={<UserProfile/>}/>
       </Routes>
     </>

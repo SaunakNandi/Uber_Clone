@@ -15,6 +15,7 @@ const CaptainSignup = () => {
   const [ vehiclePlate, setVehiclePlate ] = useState('')
   const [ vehicleCapacity, setVehicleCapacity ] = useState('')
   const [ vehicleType, setVehicleType ] = useState('')
+  const [mobile,setMobile]=useState('')
 
   const {captain,setCaptain}=useContext(CaptainDataContext)
   const submit=async(e)=>{
@@ -26,6 +27,7 @@ const CaptainSignup = () => {
       },
       email: email,
       password: password,
+      mobile,
       vehicle: {
         color: vehicleColor,
         plate: vehiclePlate,
@@ -37,10 +39,7 @@ const CaptainSignup = () => {
     const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`,captainData)
     if(response.status===201)
     {
-      const data=response.data
-      setCaptain(data.captain)
-      // localStorage.setItem('token',data.token)
-      navigate('/captain-home')
+      navigate('/otp',{state:{mobile}})
     }
     // setEmail('')
     // setFirstName('')
@@ -105,6 +104,16 @@ const CaptainSignup = () => {
               placeholder='password'
             />
 
+            <input
+              className='login-input signup-input'
+              value={mobile}
+              onChange={(e) => {
+                setMobile(e.target.value)
+              }}
+              required type="text"
+              placeholder='mobile'
+            />
+
           <h3 className='heading'>Vehicle Information</h3>
           <div className='vehicle-container'>
             <input
@@ -161,10 +170,7 @@ const CaptainSignup = () => {
           </form>
           <p style={{textAlign:'center'}}>Already have a account? <Link to='/login' className='account'>Login here</Link></p>
         </div>
-        <div>
-          <p className='footer-base'>This site is protected by reCAPTCHA and the <span className='underline'>Google Privacy
-            Policy</span> and <span className='underline'>Terms of Service apply</span>.</p>
-        </div>
+        
       </div>
     </div >
   )

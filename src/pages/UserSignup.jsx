@@ -8,6 +8,7 @@ const UserSignup = () => {
   const [firstname,setFirstName]=useState('')
   const [lastname,setLastName]=useState('')
   const [password,setPassword]=useState('')
+  const [mobile,setMobile]=useState('')
   const navigate=useNavigate()
   const {user,setUser}=useContext(UserDataContext)
   // console.log(user)
@@ -19,22 +20,20 @@ const UserSignup = () => {
         lastname
       },
       email,
+      mobile,
       password
     })
     // console.log(newUser)
     const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`,newUser)
-    if(response.status===201)
+    if(response.status===200)
     {
-      const data=response.data
-      console.log(data)
-      setUser(data.user)
-      localStorage.setItem('token',data.token)
-      navigate('/home')
+      navigate('/otp',{state:{mobile}})
     }
     setFirstName('')
     setLastName('')
     setEmail('')
     setPassword('')
+    setMobile('')
   }
   return (
     <div style={{width:'100%'}}>
@@ -42,9 +41,7 @@ const UserSignup = () => {
         <div style={{width:'100%'}}>
           <img className='login-logo' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s" alt="" />
 
-            <form onSubmit={(e) => {
-              submit(e)
-            }}
+            <form onSubmit={(e) => submit(e)}
             style={{width:'100%',marginLeft:'-1%'}}>
 
               <h3 className='heading'>What's your name</h3>
@@ -90,6 +87,17 @@ const UserSignup = () => {
               required type="password"
               placeholder='password'
             />
+            <h3 className='heading'>Enter Your mobile number</h3>
+
+            <input
+              className='login-input signup-input'
+              value={mobile}
+              onChange={(e) => {
+                setMobile(e.target.value)
+              }}
+              required type="text"
+              placeholder='mobile'
+            />
 
             <button
               className='button'
@@ -99,8 +107,8 @@ const UserSignup = () => {
           <p style={{textAlign:'center'}}>Already have a account? <Link to='/login' className='account'>Login here</Link></p>
         </div>
         <div>
-          <p className='footer-base'>This site is protected by reCAPTCHA and the <span className='underline'>Google Privacy
-            Policy</span> and <span className='underline'>Terms of Service apply</span>.</p>
+          {/* <p className='footer-base'>This site is protected by reCAPTCHA and the <span className='underline'>Google Privacy
+            Policy</span> and <span className='underline'>Terms of Service apply</span>.</p> */}
         </div>
       </div>
     </div >
