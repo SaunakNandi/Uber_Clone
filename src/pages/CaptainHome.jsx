@@ -123,18 +123,17 @@ const CaptainHome = () => {
           <CaptainDetails/>
       </div>
       <div ref={ridePopupPanelRef} className='rider-popup'>
-          <RidePopup
-          setRidePopupPanel={setRidePopupPanel}
-          setConfirmRidePopupPanel={setConfirmRidePopupPanel}
-              ride={ride}
-              confirmRide={confirmRide}
-              />
+        <RidePopup
+        setRidePopupPanel={setRidePopupPanel}
+        setConfirmRidePopupPanel={setConfirmRidePopupPanel}
+        ride={ride}
+        confirmRide={confirmRide}/>
       </div>
       <div ref={confirmRidePopupPanelRef} className='confirmed-rider-popup'>
-              <ConfirmRidePopup
-              ride={ride}
-              setConfirmRidePopupPanel={setConfirmRidePopupPanel} 
-              setRidePopupPanel={setRidePopupPanel}/>
+        <ConfirmRidePopup
+        ride={ride}
+        setConfirmRidePopupPanel={setConfirmRidePopupPanel} 
+        setRidePopupPanel={setRidePopupPanel}/>
       </div>
     </div>
   )

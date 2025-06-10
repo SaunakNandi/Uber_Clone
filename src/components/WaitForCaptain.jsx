@@ -4,7 +4,6 @@ import { VehicleContext, VehicleImgContext } from '../context/VehicleContext'
 
 const WaitForCaptain = ({setWaitingForDriver,ride,setVehicleFound,fare}) => {
   if(ride===null) return
-  const [vehicleImg]=useContext(VehicleImgContext)
   console.log(ride)
   console.log(fare)
   return (
