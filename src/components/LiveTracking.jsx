@@ -3,6 +3,7 @@ import { LoadScript,Marker,GoogleMap,DirectionsRenderer } from '@react-google-ma
 import { JourneyContext } from '../context/JourneyContext';
 import HamburgerMenu from './HamburgerMenu';
 import '../App.css'
+import { SocketContext } from '../context/SocketContext';
 const containerStyle = {
   width: '100%',
   height: '100%',
@@ -12,13 +13,15 @@ const center = {
   lat: -3.745,
   lng: -38.523
 };
-export const LiveTracking = ({showRoute=false,setPickup=()=>{},panelOpen=false}) => {
+export const LiveTracking = React.memo(({showRoute=false,setPickup=()=>{},panelOpen=false,rideId=''}) => {
   const [ currentPosition, setCurrentPosition ] = useState(center);
   const [directionsResponse, setDirectionsResponse] = useState(null);
-  const {coordinates, updateCoordinates}=useContext(JourneyContext)
   const [zoom,setZoom]=useState(11)
-  const mapRef=useRef(null)
   const [mapLoaded,setMapLoaded]=useState(false)
+  const [captainPosition,setCaptainPosition]=useState(null)
+  const mapRef=useRef(null)
+  const {socket}=useContext(SocketContext)
+  const {coordinates, updateCoordinates}=useContext(JourneyContext)
 //   console.log("Show my route ",showRoute)
   console.log("Coordinates ",coordinates)
   const { pickupCoordinates = null, destinationCoordinates = null } = coordinates || {};
@@ -107,19 +110,31 @@ export const LiveTracking = ({showRoute=false,setPickup=()=>{},panelOpen=false})
               const { latitude, longitude } = position.coords;
 
             //   console.log('Position updated:', latitude, longitude);
-              setCurrentPosition({
-                  lat: latitude,
-                  lng: longitude
-              });
-              
-          });
-      };
+                setCurrentPosition({
+                    lat: latitude,
+                    lng: longitude
+                });
+            });
+        };
 
       updatePosition(); // Initial position update
 
       const intervalId = setInterval(updatePosition, 10000); // Update every 10 seconds
       return()=>clearInterval(intervalId)
   }, []);
+
+  useEffect(()=>{
+    console.log("Ride ID",rideId)
+    socket.emit('join-ride',rideId)
+    socket.on('captain-location',(data)=>{
+        if(data?.lat && data?.lng)
+        {
+            setCaptainPosition({lat:data.lat,lng:data.lng})
+        }
+    })
+    // return ()=>socket.disconnect()
+  },[rideId])
+  console.log(captainPosition)
   return (
     <>
         {
@@ -162,7 +177,15 @@ export const LiveTracking = ({showRoute=false,setPickup=()=>{},panelOpen=false})
                         url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Custom icon for current location
                     }}
                 />
-
+                {
+                    captainPosition && (
+                        <Marker
+                        position={captainPosition}
+                        icon={{
+                            url: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png", // Custom icon for current location
+                        }}/>
+                    )
+                }
                 {/* Pickup and Destination Markers */}
                 {pickupCoordinates && destinationCoordinates && (
                     <>
@@ -194,4 +217,4 @@ export const LiveTracking = ({showRoute=false,setPickup=()=>{},panelOpen=false})
         </LoadScript>
     </>
   )
-}
+})

@@ -7,7 +7,7 @@ const ConfirmedRide = ({createRide,setvehiclePanelOpen,setConfirmedRidePanel,set
 {
     const [vehicleImg]=useContext(VehicleImgContext)
     if(!fare || !pickup || !destination || !fare[vehicleType]) return
-    console.log(fare[vehicleType])
+    // console.log(fare[vehicleType])
   return (
     <div>
         <h5 className='vehicle-panel-down'

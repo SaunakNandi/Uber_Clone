@@ -51,10 +51,10 @@ const CaptainHome = () => {
           }
         }
 
-        setInterval(updateLocation, 10000)
+        
         updateLocation()
       }
-    }, [])
+    }, [captain])
     
     socket.on('new-ride',(data)=>{
       console.log(data)

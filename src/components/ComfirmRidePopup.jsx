@@ -1,12 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './component.css'
 import axios from 'axios'
 import { LiveTracking } from './LiveTracking'
 import { JourneyContext } from '../context/JourneyContext'
+import { SocketContext } from '../context/SocketContext'
 
 const ConfirmRidePopup = ({setConfirmRidePopupPanel,ride,setRidePopupPanel}) => {
     if(ride==null) return null
+    console.log("Ride is",ride)
+    // const {socket}=useContext(SocketContext)
     const [ otp, setOtp ] = useState('')
     // const [coordinates, setCoordinates] = useState(null)
     const navigate = useNavigate()
@@ -52,11 +55,12 @@ const ConfirmRidePopup = ({setConfirmRidePopupPanel,ride,setRidePopupPanel}) => 
             
         }
     }
+    
     // Live tracker to be implemented here
   return (
     <div className='confirmride-popup-container'>
             <div className='livetracker'>
-                <LiveTracking/>
+                <LiveTracking rideId={ride._id}/>
             </div>
             <h3 className='confirm-your-ride'>Confirm this ride to Start</h3>
             <div className='confirmride-captain-details'>
@@ -64,7 +68,7 @@ const ConfirmRidePopup = ({setConfirmRidePopupPanel,ride,setRidePopupPanel}) => 
                     <img src="https://i.pinimg.com/236x/af/26/28/af26280b0ca305be47df0b799ed1b12b.jpg" alt="" />
                     <h2 className='text-lg font-medium capitalize'>{ride?.user.fullname.firstname}</h2>
                 </div>
-                <h5 style={{fontSize:'18px',fontWeight:'600'}}>2.2 KM</h5>
+                <h5 style={{fontSize:'18px',fontWeight:'600'}}>{ride?.distance}</h5>
             </div>
             <div className='bottom-dashboard'>
                 <div style={{width:'100%',marginTop:'12px'}}>

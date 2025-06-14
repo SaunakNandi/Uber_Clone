@@ -30,7 +30,7 @@ const FinishRide = ({setFinishRidePanel,rideData}) => {
                 <img src="https://i.pinimg.com/236x/af/26/28/af26280b0ca305be47df0b799ed1b12b.jpg" alt="" />
                 <h2 className='text-lg font-medium'>{rideData?.user.fullname.firstname}</h2>
             </div>
-            <h5 style={{fontSize:'18px',fontWeight:'600'}}>2.2 KM</h5>
+            <h5 style={{fontSize:'18px',fontWeight:'600'}}>{rideData?.distance}</h5>
         </div>
         <div className='finish-ride-bottom-panel'>
             <div className='finish-ride-info'>

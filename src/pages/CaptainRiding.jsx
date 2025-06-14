@@ -1,19 +1,21 @@
-import React,{useState,useRef,useContext} from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import {useState,useRef,useContext,useEffect} from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import '../Style.css'
 import FinishRide from '../components/FinishRide'
 import {useGSAP} from '@gsap/react' 
 import gsap from 'gsap'
 import { LiveTracking } from '../components/LiveTracking'
 import { JourneyContext } from '../context/JourneyContext'
+import { SocketContext } from '../context/SocketContext'
 const CaptainRiding = () => {
     const [ finishRidePanel, setFinishRidePanel ] = useState(false)
     const finishRidePanelRef = useRef(null)
     const location=useLocation()  // useLocation to extract data which are passed inside navigate() from ConfirmRidePopup.jsx
     const navigate=useNavigate()
     const rideData=location.state?.ride
+    const {socket}=useContext(SocketContext)
     if(rideData===null || rideData===undefined) navigate(-1)
-    const {coordinates, updateCoordinates}=useContext(JourneyContext)
+    const {coordinates}=useContext(JourneyContext)
     console.log(coordinates)
     useGSAP(function(){
         if(finishRidePanel)
@@ -29,6 +31,24 @@ const CaptainRiding = () => {
           })
         }
       },[finishRidePanel])
+      useEffect(()=>{
+              socket.emit('join-ride', rideData._id);
+              const intervalId=setInterval(() => {
+                  navigator.geolocation.getCurrentPosition((position)=>{
+                      const {latitude,longitude}=position.coords
+                      console.log("position captain ",latitude,longitude)
+                      socket.emit('captain-location',{
+                          rideId:rideData._id,
+                          lat:latitude,
+                          lng:longitude
+                      })
+                  })
+              }, 5000);
+              return ()=>{
+                  clearInterval(intervalId);
+                  socket.disconnect();
+              }
+          },[])
   return (
     <div className='captain-riding'>
         <div className='image-box'>
@@ -41,7 +61,7 @@ const CaptainRiding = () => {
               setFinishRidePanel(true)
           }}>
           <h5><i className="ri-arrow-up-wide-line" style={{fontSize:'32px',color:'darkslategray'}}></i></h5>
-          <h4 style={{fontSize:'24px',fontWeight:'600'}}>4 KM away</h4>
+          {/* <h4 style={{fontSize:'24px',fontWeight:'600'}}>4 KM away</h4> */}
           <button>Complete Ride</button>
         </div>
         <div ref={finishRidePanelRef} className='finishRide'>

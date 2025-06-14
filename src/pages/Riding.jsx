@@ -23,7 +23,7 @@ const Riding = () => {
             <i className="ri-home-8-line"></i>
         </Link>
         <div className="riding-panel1">
-            <LiveTracking showRoute={true}/>
+            <LiveTracking showRoute={true} rideId={ride._id}/>
         </div>
         <div className="riding-panel2">
          <div className="captain-details">

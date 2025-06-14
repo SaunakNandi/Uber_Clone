@@ -87,7 +87,7 @@ const CaptainLogin = () => {
         ):(
           <>
             <div className="">
-              <img className='login-logo' src="https://www.svgrepo.com/show/505031/uber-driver.svg" alt="" 
+              <img className='login-logo' src={uberLogo} alt="" 
               style={{marginBottom:'1rem !important'}}/>
               <form className='login-form' style={{marginTop:'30px'}} onSubmit={(e)=>submit(e)}>
                 <h3 className=''>Enter mobile number</h3>

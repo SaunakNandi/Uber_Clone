@@ -147,11 +147,6 @@ const Home = () => {
       console.log(error)
     }
   }
-  const logout=()=>{
-    console.log('logout')
-    localStorage.removeItem('token')
-    navigate('/login')
-  }
   const submit=(e)=>{
     e.preventDefault()
   }
