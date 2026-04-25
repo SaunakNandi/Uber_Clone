@@ -134,7 +134,6 @@ export const LiveTracking = React.memo(({showRoute=false,setPickup=()=>{},panelO
     })
     // return ()=>socket.disconnect()
   },[rideId])
-  console.log(captainPosition)
   return (
     <>
         {

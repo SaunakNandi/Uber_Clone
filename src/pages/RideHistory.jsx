@@ -1,25 +1,31 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import '../Style.css'
+import { UserContext, UserDataContext } from '../context/userContext'
 const RideHistory = () => {
 
     const [page,setPage]=useState(1)
     const [data,setData]=useState([])
+    const {user}=UserContext(UserDataContext)
     const [hasMore,setHasMore]=useState(true)
     async function fetchData() {
+        console.log("fetchData fetched user ",user)
          try {
-            const response=await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/ride-history?page=${page}`, {
+            const res=await axios.get(`${import.meta.env.VITE_BASE_URL}/user-ride-history?page=${page}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             })
+            const response=res.data
+            console.log("reponse data",response.rideData)
             if(response.data)
             {
-                setData(prev=>[...prev,response.data.data])
+                setData(prev=>[...prev,response.rideData])
                 setHasMore(response.data.hasMore)
                 console.log(response.data)
             }
         } catch (error) {
+            
             console.log("Error in RideHistory ",error)
         }
     }
@@ -52,7 +58,6 @@ const RideHistory = () => {
                 data && (
                     data.map((item,index)=>(
                         <>
-                            {console.log(item)}
                             {
                                 item.captain && (
                                     <div className="rides">

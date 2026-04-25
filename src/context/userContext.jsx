@@ -9,8 +9,11 @@ export const UserContext = ({children}) => {
             lastname:''
         },
         email:'',
+        mobile:'',
+        socketId:'',
+        _id:''
     })
-    // console.log(user)
+    console.log(user)
   return (
     <div>
         <UserDataContext.Provider value={{user,setUser}}>

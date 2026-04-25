@@ -5,7 +5,7 @@ import { UserDataContext } from '../context/userContext'
 
 const UserProtectWrapper = ({children}) => {
     const token=localStorage.getItem('token')
-    const {user,setUser}=useContext(UserDataContext)
+    const {setUser}=useContext(UserDataContext)
     const [isLoading,setIsLoading]=useState(true)
 
     console.log('UserProtectWrapper')
@@ -24,16 +24,19 @@ const UserProtectWrapper = ({children}) => {
         console.log(data)
         if(response.status===200)
         {
-          // console.log(data)
+          console.log(data)
           setUser(data)
           setIsLoading(false)
-          navigate('/home')
+          // navigate('/home')
         }
       } catch (error) {
-        console.log(error)
-        // localStorage.removeItem('token')
-        setIsLoading(false)
-        navigate('/login')
+        console.log("Token invalid or expired:", error);
+    
+    // ACTION: Remove the useless token!
+    localStorage.removeItem('token'); 
+    
+    setIsLoading(false);
+    navigate('/login');
       }
     }
 

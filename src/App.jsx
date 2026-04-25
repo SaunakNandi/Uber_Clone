@@ -59,9 +59,7 @@ function App() {
           </UserProtectWrapper>
         }/>
         <Route path='/otp' element={
-          <UserProtectWrapper>
             <OtpVerification/>
-          </UserProtectWrapper>
         }/>
         <Route path='/logout' element={
           <UserProtectWrapper>
@@ -84,9 +82,7 @@ function App() {
           }
           />
           <Route path='/captain-otp' element={
-            <CaptainProtectWrapper>
               <CaptainOTPVerification/>
-            </CaptainProtectWrapper>
           }/>
         <Route path='/profile' element={<UserProfile/>}/>
       </Routes>
