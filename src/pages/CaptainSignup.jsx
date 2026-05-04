@@ -37,9 +37,9 @@ const CaptainSignup = () => {
     }
     console.log(captainData)
     const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`,captainData)
-    if(response.status===201)
+    if(response.status===200)
     {
-      navigate('/otp',{state:{mobile}})
+      navigate('/otp',{state:{mobile,routing_page:'captains'}})
     }
     // setEmail('')
     // setFirstName('')
@@ -82,7 +82,6 @@ const CaptainSignup = () => {
 
             <h3 className='heading'>What's your email</h3>
             <input
-              required
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value)
@@ -91,9 +90,7 @@ const CaptainSignup = () => {
               type="email"
               placeholder='email@example.com'
             />
-
             <h3 className='heading'>Enter Password</h3>
-
             <input
               className='login-input signup-input'
               value={password}
@@ -104,6 +101,7 @@ const CaptainSignup = () => {
               placeholder='password'
             />
 
+<h3 className='heading'>Enter Mobile Number</h3>
             <input
               className='login-input signup-input'
               value={mobile}

@@ -7,23 +7,25 @@ import { useContext } from 'react'
 const OtpVerification = () => {
     const mobileRef=useRef(null)
     const otpRef=useRef(null)
-    console[otpReceived,setOtpReceived]=useState(false)
+    const [otpReceived,setOtpReceived]=useState(false)
     const navigate=useNavigate()
     const location=useLocation()
-    const {mobile}=location.state || {}
+    const {mobile,routing_page}=location.state || {}
     const {setUser}=useContext(UserDataContext)
     async function submitOTP()
     {
-        const otp=otpRef.current
+        const otp=otpRef.current.value
         try {
-            const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/users/verify-otp`,{mobile,otp})
+            const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/${routing_page}/verify-otp`,{mobile,otp})
             console.log(response)
             if(response.status==200)
             {
                 const data=response.data
                 setUser(data.user)
                 localStorage.setItem('token',data.token)
-                navigate('/home')
+                if(routing_page==="captains")
+                    navigate('/captain-home')
+                else navigate('/home')
             }
         } catch (error) {
             console.log("OTP verification",error)

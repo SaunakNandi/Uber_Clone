@@ -27,7 +27,7 @@ const UserSignup = () => {
     const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`,newUser)
     if(response.status===200)
     {
-      navigate('/otp',{state:{mobile}})
+      navigate('/otp',{state:{mobile,routing_page:"users"}})
     }
     setFirstName('')
     setLastName('')

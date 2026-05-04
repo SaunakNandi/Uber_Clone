@@ -9,9 +9,9 @@ const RideHistory = () => {
     const {user}=UserContext(UserDataContext)
     const [hasMore,setHasMore]=useState(true)
     async function fetchData() {
-        console.log("fetchData fetched user ",user)
+        // console.log("fetchData fetched user ",user)
          try {
-            const res=await axios.get(`${import.meta.env.VITE_BASE_URL}/user-ride-history?page=${page}`, {
+            const res=await axios.get(`${import.meta.env.VITE_BASE_URL}/users/user-ride-history?page=${page}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }

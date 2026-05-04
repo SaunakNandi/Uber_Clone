@@ -42,9 +42,9 @@ const CaptainLogin = () => {
   const submit=async(e)=>{
     e.preventDefault()
     const mobile=mobileRef.current.value
-    // console.log(captainData)
+    console.log(mobile)
     const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`,{mobile})
-    // console.log(response)
+    console.log(response)
     if(response.status===200)
     {
       setMobileNo(mobile)
