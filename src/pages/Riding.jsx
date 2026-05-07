@@ -12,7 +12,7 @@ const Riding = () => {
   if(ride===null || ride===undefined) navigate(-1)
   console.log(ride)
   const {socket}=useContext(SocketContext)
-  const {coordinates, updateCoordinates}=useContext(JourneyContext)
+  const {coordinates}=useContext(JourneyContext)
   console.log(coordinates)
   socket.on('ride-ended',()=>{
     navigate('/home')

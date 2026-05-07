@@ -236,15 +236,15 @@ const Home = () => {
 }, [ waitingForDriver ])
   
 
-async function fetchRideHistory(id) {
-  const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/ride-history`, {
+async function fetchRideHistory() {
+  const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/user-ride-history`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
 
         })
   console.log("response while fetching ride history ",response.data)
-  setUserRideHistory(response.data)        
+  setUserRideHistory({data:response.data,hasMore:false})        
 }
 
 useEffect(()=>{
