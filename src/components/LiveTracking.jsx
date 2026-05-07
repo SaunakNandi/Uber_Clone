@@ -15,6 +15,7 @@ const center = {
 };
 export const LiveTracking = React.memo(({showRoute=false,setPickup=()=>{},panelOpen=false,rideId=''}) => {
   const [ currentPosition, setCurrentPosition ] = useState(center);
+  const [ mapCenter, setMapCenter ] = useState(center); // NEW: Dedicated state for map center
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [zoom,setZoom]=useState(11)
   const [mapLoaded,setMapLoaded]=useState(false)
@@ -22,8 +23,6 @@ export const LiveTracking = React.memo(({showRoute=false,setPickup=()=>{},panelO
   const mapRef=useRef(null)
   const {socket}=useContext(SocketContext)
   const {coordinates, updateCoordinates}=useContext(JourneyContext)
-//   console.log("Show my route ",showRoute)
-  console.log("Coordinates ",coordinates)
   const { pickupCoordinates = null, destinationCoordinates = null } = coordinates || {};
 
 
@@ -82,46 +81,39 @@ export const LiveTracking = React.memo(({showRoute=false,setPickup=()=>{},panelO
         }
         });
     }
-  useEffect(() => {
+useEffect(() => {
+      // 1. Get initial position to center the map ONCE
       navigator.geolocation.getCurrentPosition((position) => {
           const { latitude, longitude } = position.coords;
-          if(mapLoaded)
-            getAddressFromCoords(latitude,longitude)
-          setCurrentPosition({
-              lat: latitude,
-              lng: longitude
-          });
+          const initialCoords = { lat: latitude, lng: longitude };
+          
+          setCurrentPosition(initialCoords);
+          setMapCenter(initialCoords); // Set map center only on initial load
+          
+          if(mapLoaded) {
+             getAddressFromCoords(latitude, longitude);
+          }
       });
 
+      // 2. Watch position continuously for the marker
       const watchId = navigator.geolocation.watchPosition((position) => {
           const { latitude, longitude } = position.coords;
+          
+          // Only update the marker position, DO NOT update mapCenter here.
+          // This prevents the map from snapping back while the user is dragging.
           setCurrentPosition({
               lat: latitude,
               lng: longitude
           });
-      });
+      }, 
+      (error) => console.error(error), 
+      { enableHighAccuracy: true }); // Good practice for ride apps
 
       return () => navigator.geolocation.clearWatch(watchId);
+      
+      // Note: Delete your other useEffect that uses setInterval(updatePosition, 10000)
+      // watchPosition completely replaces the need for polling!
   }, [mapLoaded]);
-
-  useEffect(() => {
-      const updatePosition = () => {
-          navigator.geolocation.getCurrentPosition((position) => {
-              const { latitude, longitude } = position.coords;
-
-            //   console.log('Position updated:', latitude, longitude);
-                setCurrentPosition({
-                    lat: latitude,
-                    lng: longitude
-                });
-            });
-        };
-
-      updatePosition(); // Initial position update
-
-      const intervalId = setInterval(updatePosition, 10000); // Update every 10 seconds
-      return()=>clearInterval(intervalId)
-  }, []);
 
   useEffect(()=>{
     console.log("Ride ID",rideId)
@@ -152,23 +144,21 @@ export const LiveTracking = React.memo(({showRoute=false,setPickup=()=>{},panelO
                 </>
             )
         }
-        <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
-            {/* Can we create a '+' '-' button for zoom-in and zoom-out */}
-            <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={currentPosition}
-                zoom={zoom}
-                onLoad={(map)=>{
-                    mapRef.current=map
-                    setMapLoaded(true)
-                    calculateRoute()
-                }}
-                options={{
-                    draggable: true,
-                    scrollwheel: true,
-                    disableDefaultUI: false,
-                    // zoomControl: true,
-                }}>
+<LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
+          <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={mapCenter} // USE THE NEW SEPARATE STATE HERE
+              zoom={zoom}
+              onLoad={(map)=>{
+                  mapRef.current=map
+                  setMapLoaded(true)
+                  calculateRoute()
+              }}
+              options={{
+                  gestureHandling: "greedy", // CRITICAL: Allows 1-finger dragging on mobile
+                  disableDefaultUI: false,
+                  // draggable: true, <--- You can remove this, gestureHandling overrides it
+              }}>
                 {/* Current location marker with a distinct icon */}
                 <Marker
                     position={currentPosition}

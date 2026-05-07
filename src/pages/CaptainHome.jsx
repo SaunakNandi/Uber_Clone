@@ -22,7 +22,6 @@ const CaptainHome = () => {
     const { captain } = useContext(CaptainDataContext)
     const panelClose=useRef(null)
     useEffect(() => {
-// may cause location error
       if(captain)
       {
         socket.emit('join',{
@@ -32,14 +31,6 @@ const CaptainHome = () => {
         const updateLocation = () => {
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
-                // console.log({
-                //   userId: captain._id,
-                //   location: {
-                //       ltd: position.coords.latitude,
-                //       lng: position.coords.longitude
-                //   }
-                // })
-
                 socket.emit('update-location-captain', {
                     userId: captain._id,
                     location: {

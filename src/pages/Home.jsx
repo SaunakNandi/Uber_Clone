@@ -11,11 +11,12 @@ import WaitForCaptain from '../components/WaitForCaptain'
 import axios from 'axios'
 import debounce from "lodash.debounce";
 import { SocketContext } from '../context/SocketContext'
-import { UserDataContext } from '../context/userContext'
+import { UserContext, UserDataContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
 import { LiveTracking } from '../components/LiveTracking'
 import { JourneyContext } from '../context/JourneyContext'
 import HamburgerMenu from '../components/HamburgerMenu'
+import { UserRideDataContext } from '../context/userRideHistoryContext'
 
 
 const Home = () => {
@@ -40,11 +41,11 @@ const Home = () => {
   const waitingForCaptainRef=useRef(null)
   const {socket}=useContext(SocketContext)
   const {user}=useContext(UserDataContext)
+  const {setUserRideHistory}=useContext(UserRideDataContext)
   const {coordinates, updateCoordinates}=useContext(JourneyContext)
   const navigate=useNavigate()
 
   useEffect(()=>{
-    // console.log(user)
     if(!user) return
     socket.emit("join",{userType:"user",userId:user?._id})
   },[user])
@@ -191,6 +192,7 @@ const Home = () => {
       })
     }
   },[vehiclePanelOpen])
+  
   useGSAP(function(){
     if(confirmedRidePanel)
     {
@@ -233,6 +235,21 @@ const Home = () => {
     }
 }, [ waitingForDriver ])
   
+
+async function fetchRideHistory(id) {
+  const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/ride-history`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+
+        })
+  console.log("response while fetching ride history ",response.data)
+  setUserRideHistory(response.data)        
+}
+
+useEffect(()=>{
+  fetchRideHistory()
+},[])
 
 // home-logo2 incomplete
   return (

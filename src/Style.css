@@ -39,6 +39,7 @@
   display: flex;
   flex-direction: column;
   justify-content: end;
+  pointer-events: none;
 }
 .trip-heading{
     font-size: 1.5rem;  /* Equivalent to text-2xl in Tailwind CSS (24px by default) */
@@ -66,7 +67,9 @@
     padding: 24px;
     background-color: white;
     position: relative;
+    pointer-events: auto;
 }
+
 .trip-smallbox h5{
     position: absolute;
     right: 1.5rem;              /* 1.5rem = 24px from the left */
@@ -78,6 +81,7 @@
 .trip-largebox{
     padding: 20px;
     background-color: white;
+    pointer-events: auto;
     /* display: none; */
 }
 .liner{
