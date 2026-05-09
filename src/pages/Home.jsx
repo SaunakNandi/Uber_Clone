@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useContext, useEffect } from 'react'
+import  { useRef, useState, useCallback, useContext, useEffect } from 'react'
 import  '../Style.css'
 import {useGSAP} from '@gsap/react' 
 import gsap from 'gsap'
@@ -11,11 +11,10 @@ import WaitForCaptain from '../components/WaitForCaptain'
 import axios from 'axios'
 import debounce from "lodash.debounce";
 import { SocketContext } from '../context/SocketContext'
-import { UserContext, UserDataContext } from '../context/userContext'
+import { UserDataContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
 import { LiveTracking } from '../components/LiveTracking'
 import { JourneyContext } from '../context/JourneyContext'
-import HamburgerMenu from '../components/HamburgerMenu'
 import { UserRideDataContext } from '../context/userRideHistoryContext'
 
 
@@ -42,7 +41,7 @@ const Home = () => {
   const {socket}=useContext(SocketContext)
   const {user}=useContext(UserDataContext)
   const {setUserRideHistory}=useContext(UserRideDataContext)
-  const {coordinates, updateCoordinates}=useContext(JourneyContext)
+  const { updateCoordinates }=useContext(JourneyContext)
   const navigate=useNavigate()
 
   useEffect(()=>{
@@ -244,7 +243,7 @@ async function fetchRideHistory() {
 
         })
   console.log("response while fetching ride history ",response.data)
-  setUserRideHistory({data:response.data,hasMore:false})        
+  setUserRideHistory({data:response.data.rideData,hasMore:false})        
 }
 
 useEffect(()=>{

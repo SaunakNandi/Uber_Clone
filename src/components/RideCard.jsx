@@ -3,7 +3,7 @@ import { MapPin, Clock, CheckCircle2, User, Bike } from 'lucide-react';
 import './component.css'; // Make sure this path is correct
 
 // --- 1. INDIVIDUAL RIDE CARD COMPONENT ---
-const RideCard = ({ ride }) => {
+const RideCard = ({ ride,fullname }) => {
   const formattedDate = new Date(ride.completedOn).toLocaleString('en-IN', {
     month: 'short',
     day: 'numeric',
@@ -12,7 +12,7 @@ const RideCard = ({ ride }) => {
     minute: '2-digit',
   });
 
-  const captainName = `${ride.captain?.fullname?.firstname || ''} ${ride.captain?.fullname?.lastname || ''}`.trim() || 'Unknown Captain';
+
   const vehiclePlate = ride.captain?.vehicle?.plate || 'N/A';
 
   return (
@@ -63,7 +63,7 @@ const RideCard = ({ ride }) => {
             <User size={20} />
           </div>
           <div className="captain-text-box">
-            <p className="captain-name-text">{captainName}</p>
+            <p className="captain-name-text">{fullname}</p>
             <p className="captain-plate-text">
               <Bike size={12} />
               {vehiclePlate}

@@ -4,8 +4,9 @@ import '../Style.css'
 import RideCard from '../components/RideCard'
 import {  Navigation, Bike } from 'lucide-react';
 import { UserRideDataContext } from '../context/userRideHistoryContext'
+import { useParams } from 'react-router-dom';
 const RideHistory = () => {
-
+const {role}=useParams()
     const [page,setPage]=useState(1)
     const {userRideHistory}=useContext(UserRideDataContext)
     const [data,setData]=useState(userRideHistory.data ??[])
@@ -14,7 +15,7 @@ const RideHistory = () => {
     async function fetchData() {
         // console.log("fetchData fetched user ",user)
          try {
-            const res=await axios.get(`${import.meta.env.VITE_BASE_URL}/users/user-ride-history?page=${page}`, {
+            const res=await axios.get(`${import.meta.env.VITE_BASE_URL}/${role}/${role}-ride-history?page=${page}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
@@ -25,7 +26,7 @@ const RideHistory = () => {
             {
                 setData(prev=>[...prev,...response.rideData])
                 setHasMore(response.data.hasMore)
-                console.log(response.data)
+
             }
         } catch (error) {
             console.log("Error in RideHistory ",error)
@@ -61,9 +62,10 @@ const RideHistory = () => {
       ) : (
         <div className="ride-list-container">
             {console.log("data of rides ",data)}
-          {data.map((ride) => (
-            <RideCard key={ride._id} ride={ride} />
-          ))}
+          {data.map((ride) => {
+            let fullname=ride.user.fullname.firstname+" "+ride.user.fullname.lastname
+          return  <RideCard key={ride._id} ride={ride} fullname={fullname}/>
+})}
         </div>
       )}
 

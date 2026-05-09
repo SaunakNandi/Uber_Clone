@@ -1,4 +1,4 @@
-import React,{useState,useRef} from 'react'
+import {useState,useRef} from 'react'
 import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
 import './component.css'
@@ -38,9 +38,8 @@ const HamburgerMenu = ({captain=false}) => {
       <div className="menu" ref={menuRef}>
         <ul>
           <li>Profile</li>
-          {
-            !captain && <li><Link to='/ride-history'>Ride History</Link></li>
-          }
+          <li><Link to={captain? `/ride-history/captains`:`/ride-history/user`}>Ride History</Link></li>
+          
           <li>Update Profile</li>
           <li>Settings</li>
           <li><Link to='/logout'>Logout</Link></li>

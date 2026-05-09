@@ -49,7 +49,7 @@ function App() {
         <Route path='/login' element={
             <UserLogin/>
         }/>
-        <Route path='/ride-history' element={<RideHistory/>}/>
+        <Route path='/ride-history/:role' element={<RideHistory/>}/>
         <Route path='/signup' element={
             <UserSignup/>
           }/>
