@@ -84,7 +84,9 @@ function App() {
           <Route path='/captain-otp' element={
               <CaptainOTPVerification/>
           }/>
-        <Route path='/profile' element={<UserProfile/>}/>
+        <Route path='/user-profile' element={<UserProtectWrapper>
+            <UserProfile/>
+          </UserProtectWrapper>}/>
       </Routes>
     </>
   )
