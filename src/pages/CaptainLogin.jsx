@@ -14,7 +14,7 @@ const CaptainLogin = () => {
 
   const ValidityState=async(token)=>{
     try {
-      const response=await axios.get(`${import.meta.env.VITE_BASE_URL}/captains/profile`,
+      const response=await axios.get(`${import.meta.env.VITE_BASE_URL}/captain/profile`,
         {
           headers:{
             Authorization:`Bearer ${token}`
@@ -43,7 +43,7 @@ const CaptainLogin = () => {
     e.preventDefault()
     const mobile=mobileRef.current.value
     console.log(mobile)
-    const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`,{mobile})
+    const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/login`,{mobile})
     console.log(response)
     if(response.status===200)
     {
@@ -57,7 +57,7 @@ const CaptainLogin = () => {
     const otp=otpRef.current.value
     console.log(otp,mobileNo)
     try {
-      const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login-otp`,{otp,mobile:mobileNo})
+      const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/login-otp`,{otp,mobile:mobileNo})
       if(response.status==200)
       {
         console.log(response)

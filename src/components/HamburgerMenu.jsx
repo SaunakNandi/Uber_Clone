@@ -38,7 +38,7 @@ const HamburgerMenu = ({captain=false}) => {
       <div className="menu" ref={menuRef}>
         <ul>
           <li><Link to={captain? `/captain-profile`:`/user-profile`}>Profile</Link></li>
-          <li><Link to={captain? `/ride-history/captains`:`/ride-history/user`}>Ride History</Link></li>
+          <li><Link to={captain? `/ride-history/captain`:`/ride-history/user`}>Ride History</Link></li>
           
           <li>Update Profile</li>
           <li>Settings</li>

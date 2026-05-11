@@ -17,7 +17,7 @@ const CaptainSignup = () => {
   const [ vehicleType, setVehicleType ] = useState('')
   const [mobile,setMobile]=useState('')
 
-  const {captain,setCaptain}=useContext(CaptainDataContext)
+  const {setCaptain}=useContext(CaptainDataContext)
   const submit=async(e)=>{
     e.preventDefault()
     const captainData = {
@@ -36,19 +36,13 @@ const CaptainSignup = () => {
       }
     }
     console.log(captainData)
-    const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`,captainData)
+    const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/register`,captainData)
     if(response.status===200)
     {
+      console.log("captain signed up ",response.data)
+      setCaptain(response.data)
       navigate('/otp',{state:{mobile,routing_page:'captains'}})
     }
-    // setEmail('')
-    // setFirstName('')
-    // setLastName('')
-    // setPassword('')
-    // setVehicleColor('')
-    // setVehiclePlate('')
-    // setVehicleCapacity('')
-    // setVehicleType('')
   }
   return (
     <div style={{width:'100%'}}>

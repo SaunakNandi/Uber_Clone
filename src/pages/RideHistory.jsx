@@ -61,9 +61,10 @@ const {role}=useParams()
         </div>
       ) : (
         <div className="ride-list-container">
-            {console.log("data of rides ",data)}
           {data.map((ride) => {
-            let fullname=ride.user.fullname.firstname+" "+ride.user.fullname.lastname
+            console.log("ride value is ",ride," => ",role,ride[role])
+            let requiredRole=role==="captain"?"user":"captain"
+            let fullname=ride[requiredRole].fullname.firstname+" "+ride[requiredRole].fullname.lastname
           return  <RideCard key={ride._id} ride={ride} fullname={fullname}/>
 })}
         </div>
