@@ -1,118 +1,130 @@
-import React,{useContext, useState} from 'react'
-import { Link,useNavigate } from 'react-router-dom'
-import '../App.css'
-import {UserDataContext} from '../context/userContext'
-import axios from 'axios'
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../App.css";
+import axios from "axios";
 const UserSignup = () => {
-  const [email,setEmail]=useState('')
-  const [firstname,setFirstName]=useState('')
-  const [lastname,setLastName]=useState('')
-  const [password,setPassword]=useState('')
-  const [mobile,setMobile]=useState('')
-  const navigate=useNavigate()
-  const {user,setUser}=useContext(UserDataContext)
+  const [email, setEmail] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [mobile, setMobile] = useState("");
+  const navigate = useNavigate();
   // console.log(user)
-  const submit=async(e)=>{
-    e.preventDefault()
-    const newUser=({
-      fullname:{
+  const submit = async (e) => {
+    e.preventDefault();
+    const newUser = {
+      fullname: {
         firstname,
-        lastname
+        lastname,
       },
       email,
       mobile,
-      password
-    })
+      password,
+    };
     // console.log(newUser)
-    const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`,newUser)
-    if(response.status===200)
-    {
-      navigate('/otp',{state:{mobile,routing_page:"users"}})
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/register`,
+      newUser,
+    );
+    if (response.status === 200 || response.status === 201) {
+      navigate("/otp", { state: { mobile, routing_page: "users" } });
     }
-    setFirstName('')
-    setLastName('')
-    setEmail('')
-    setPassword('')
-    setMobile('')
-  }
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
+    setMobile("");
+  };
   return (
-    <div style={{width:'100%'}}>
-      <div className='login-container'>
-        <div style={{width:'100%'}}>
-          <img className='login-logo' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s" alt="" />
+    <div style={{ width: "100%" }}>
+      <div className="login-container">
+        <div style={{ width: "100%" }}>
+          <img
+            className="login-logo"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s"
+            alt=""
+          />
 
-            <form onSubmit={(e) => submit(e)}
-            style={{width:'100%',marginLeft:'-1%'}}>
+          <form
+            onSubmit={(e) => submit(e)}
+            style={{ width: "100%", marginLeft: "-1%" }}
+          >
+            <h3 className="heading">What's your name</h3>
+            <div className="signup-name">
+              <input
+                required
+                className="signup-input"
+                type="text"
+                placeholder="First name"
+                value={firstname}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <input
+                required
+                className="signup-input"
+                type="text"
+                placeholder="Last name"
+                value={lastname}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
 
-              <h3 className='heading'>What's your name</h3>
-              <div className='signup-name'>
-                <input
-                  required
-                  className='signup-input'
-                  type="text"
-                  placeholder='First name'
-                  value={firstname}
-                  onChange={(e)=>setFirstName(e.target.value)}
-                />
-                <input
-                  required
-                  className='signup-input'
-                  type="text"
-                  placeholder='Last name'
-                  value={lastname}
-                  onChange={(e)=>setLastName(e.target.value)}
-                />
-              </div>
-
-            <h3 className='heading'>What's your email</h3>
+            <h3 className="heading">What's your email</h3>
             <input
               required
               value={email}
               onChange={(e) => {
-                setEmail(e.target.value)
+                setEmail(e.target.value);
               }}
-              className='login-input signup-input'
+              className="login-input signup-input"
               type="email"
-              placeholder='email@example.com'
+              placeholder="email@example.com"
             />
 
-            <h3 className='heading'>Enter Password</h3>
+            <h3 className="heading">Enter Password</h3>
 
             <input
-              className='login-input signup-input'
+              className="login-input signup-input"
               value={password}
               onChange={(e) => {
-                setPassword(e.target.value)
+                setPassword(e.target.value);
               }}
-              required type="password"
-              placeholder='password'
+              required
+              type="password"
+              placeholder="password"
             />
-            <h3 className='heading'>Enter Your mobile number</h3>
+            <h3 className="heading">Enter Your mobile number</h3>
 
             <input
-              className='login-input signup-input'
+              className="login-input signup-input"
               value={mobile}
               onChange={(e) => {
-                setMobile(e.target.value)
+                setMobile(e.target.value);
               }}
-              required type="text"
-              placeholder='mobile'
+              required
+              type="text"
+              placeholder="mobile"
             />
 
-            <button
-              className='button'
-            >Create account</button>
-
+            <button className="button">Create account</button>
           </form>
-          <p style={{textAlign:'center'}}>Already have a account? <Link to='/login' className='account'>Login here</Link></p>
+          <p style={{ textAlign: "center" }}>
+            Already have a account?{" "}
+            <Link to="/login" className="account">
+              Login here
+            </Link>
+          </p>
         </div>
         <div>
-          {/* <p className='footer-base'>This site is protected by reCAPTCHA and the <span className='underline'>Google Privacy
-            Policy</span> and <span className='underline'>Terms of Service apply</span>.</p> */}
+          <p className="footer-base">
+            This site is protected by reCAPTCHA and the{" "}
+            <span className="underline">Google Privacy Policy</span> and{" "}
+            <span className="underline">Terms of Service apply</span>.
+          </p>
         </div>
       </div>
-    </div >
-  )
-}
+    </div>
+  );
+};
 
-export default UserSignup
+export default UserSignup;

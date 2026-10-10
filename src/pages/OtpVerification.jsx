@@ -1,44 +1,45 @@
-import axios from 'axios'
-import React, { useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { UserContext, UserDataContext } from '../context/userContext'
-import { useContext } from 'react'
+import axios from "axios";
+import { useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { UserDataContext } from "../context/userContext";
+import { useContext } from "react";
 
 const OtpVerification = () => {
-    const mobileRef=useRef(null)
-    const otpRef=useRef(null)
-    const [otpReceived,setOtpReceived]=useState(false)
-    const navigate=useNavigate()
-    const location=useLocation()
-    const {mobile,routing_page}=location.state || {}
-    const {setUser}=useContext(UserDataContext)
-    async function submitOTP()
-    {
-        const otp=otpRef.current.value
-        try {
-            const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/${routing_page}/verify-otp`,{mobile,otp})
-            console.log(response)
-            if(response.status==200)
-            {
-                const data=response.data
-                setUser(data.user)
-                localStorage.setItem('token',data.token)
-                if(routing_page==="captains")
-                    navigate('/captain-home')
-                else navigate('/home')
-            }
-        } catch (error) {
-            console.log("OTP verification",error)
-        }
+  const mobileRef = useRef(null);
+  const otpRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { mobile, routing_page } = location.state || {};
+  const { setUser } = useContext(UserDataContext);
+  async function submitOTP() {
+    const otp = otpRef.current.value;
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/${routing_page}/verify-otp`,
+        { mobile, otp },
+      );
+      console.log(response);
+      if (response.status == 200) {
+        const data = response.data;
+        setUser(data.user);
+        localStorage.setItem("token", data.token);
+        if (routing_page === "captain") navigate("/captain-home");
+        else navigate("/home");
+      }
+    } catch (error) {
+      console.log("OTP verification", error);
     }
-    
-  return (
-    <div className='otp-container'>
-        <p>You have received your otp on {mobileRef.current}</p>
-        <input type="text" ref={otpRef}/>
-        <button type='button' onClick={submitOTP}>Confirm OTP</button>
-    </div>
-  )
-}
+  }
 
-export default OtpVerification
+  return (
+    <div className="otp-container">
+      <p>You have received your otp on {mobileRef.current}</p>
+      <input type="text" ref={otpRef} />
+      <button type="button" onClick={submitOTP}>
+        Confirm OTP
+      </button>
+    </div>
+  );
+};
+
+export default OtpVerification;
