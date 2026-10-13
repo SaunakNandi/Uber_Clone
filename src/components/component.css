@@ -149,6 +149,7 @@
 
 .confirmride-popup-container {
   background-color: white;
+  position: relative;
 }
 
 /* p-1 text-center w-[93%] absolute top-0 */
@@ -166,8 +167,6 @@
 .confirm-your-ride {
   font-size: 24px;
   font-weight: 600;
-  margin-bottom: 20px;
-  margin-top: 450px;
 }
 .confirmride-captain-details {
   display: flex;
@@ -176,6 +175,7 @@
   /* border: 8px solid yellow; */
   background-color: yellow;
   padding: 12px;
+  width: 90%;
   /* margin-top: 16px; */
   border-radius: 12px;
 }
@@ -737,4 +737,14 @@
 
 .edit-popup-save-details:active {
   opacity: 0.8;
+}
+
+.wrapper-condfirmation {
+  position: absolute;
+  top: 348px;
+  background-color: #fff;
+  width: 100vw;
+  transform: translateX(-3%);
+  /* padding-left: 4px; */
+  padding-right: 8px;
 }

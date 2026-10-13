@@ -60,15 +60,15 @@
   color: #fff;
   padding: 8px 16px;
   border-radius: 18px;
-  margin-top: 12px;
+  margin-top: 6px;
   width: 100%;
 }
 .trip-smallbox {
   height: 20%;
   padding: 24px;
-  background-color: white;
   position: relative;
   pointer-events: auto;
+  margin-bottom: 8px;
 }
 
 .trip-smallbox h5 {
@@ -183,7 +183,6 @@ p {
 .choose-vehicle {
   font-size: 24px;
   font-weight: 600;
-  margin-bottom: 20px;
 }
 .confirm-img {
   display: flex;
