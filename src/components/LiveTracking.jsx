@@ -132,7 +132,6 @@ export const LiveTracking = React.memo(function LiveTracking({
   }, [mapLoaded]);
 
   useEffect(() => {
-    console.log("Ride ID", rideId);
     socket.emit("join-ride", rideId);
     socket.on("captain-location", handleCaptainLocation);
     return () => {

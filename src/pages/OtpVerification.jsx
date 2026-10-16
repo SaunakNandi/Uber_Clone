@@ -5,7 +5,6 @@ import { UserDataContext } from "../context/userContext";
 import { useContext } from "react";
 
 const OtpVerification = () => {
-  const mobileRef = useRef(null);
   const otpRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,7 +17,6 @@ const OtpVerification = () => {
         `${import.meta.env.VITE_BASE_URL}/${routing_page}/verify-otp`,
         { mobile, otp },
       );
-      console.log(response);
       if (response.status == 200) {
         const data = response.data;
         setUser(data.user);
@@ -33,7 +31,7 @@ const OtpVerification = () => {
 
   return (
     <div className="otp-container">
-      <p>You have received your otp on {mobileRef.current}</p>
+      <p>You have received your otp on {mobile}</p>
       <input type="text" ref={otpRef} />
       <button type="button" onClick={submitOTP}>
         Confirm OTP

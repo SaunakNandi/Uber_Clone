@@ -54,7 +54,6 @@ const CaptainLogin = () => {
   };
   const submitOtp = async (e) => {
     e.preventDefault();
-    // console.log("clicked")
     const otp = otpRef.current.value;
     console.log(otp, mobileNo);
     try {

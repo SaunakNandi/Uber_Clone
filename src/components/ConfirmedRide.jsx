@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import "../Style.css";
 import "remixicon/fonts/remixicon.css";
 import { VehicleImgContext } from "../context/VehicleContext";
@@ -13,7 +13,7 @@ const ConfirmedRide = ({
   destination,
   vehicleType,
 }) => {
-  const [vehicleImg] = useContext(VehicleImgContext);
+  const { vehicleImg } = useContext(VehicleImgContext);
   if (!fare || !pickup || !destination || !fare[vehicleType]) return;
   // console.log(fare[vehicleType])
   return (

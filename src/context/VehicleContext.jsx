@@ -1,15 +1,13 @@
-import React, { createContext, useState } from 'react'
+import { createContext, useState } from "react";
 
-export const VehicleImgContext=createContext()
-export const VehicleContext = ({children}) => {
-
-    const [vehicleImg,setVehicleImg]=useState('')
+export const VehicleImgContext = createContext();
+export const VehicleContext = ({ children }) => {
+  const [vehicleImg, setVehicleImg] = useState("");
   return (
     <div>
-        <VehicleImgContext.Provider value={[vehicleImg,setVehicleImg]}>
-            {children}
-        </VehicleImgContext.Provider>
+      <VehicleImgContext.Provider value={{ vehicleImg, setVehicleImg }}>
+        {children}
+      </VehicleImgContext.Provider>
     </div>
-  )
-}
-
+  );
+};
